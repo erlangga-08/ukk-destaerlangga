@@ -24,7 +24,7 @@ Aplikasi ini merupakan contoh project uji kompetensi program keahlian Rekayasa P
    app.baseURL = 'http://localhost:8080'
 
    database.default.hostname = localhost
-   database.default.database = ukkPOS2
+   database.default.database = db_kasir
    database.default.username = root
    database.default.password = 
    database.default.DBDriver = MySQLi
