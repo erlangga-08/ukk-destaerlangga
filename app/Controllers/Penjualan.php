@@ -24,6 +24,32 @@ class Penjualan extends BaseController
 
     public function simpanPenjualan()
     {
+        helper(['form']);
+        $validation = \Config\Services::validation();
+
+        $rules = [
+            'jumlah' => 'required|greater_than[0]',
+            'id_produk' => 'required',
+        ];
+
+        $messages = [
+            'jumlah' => [
+                'required' => 'Tidak boleh kosong!',
+                'greater_than' => 'Jumlah harus lebih besar dari 0!'
+            ],
+            'id_produk' => [
+                'required' => 'Tidak boleh kosong!',
+            ],
+        ];
+
+        // set validasi
+        $validation->setRules($rules, $messages);
+
+        // cek validasi gagal
+        if (!$validation->withRequest($this->request)->run()) {
+            return redirect()->back()->withInput()->with('errors', $validation->getErrors());
+        }
+
         // ambil detail barang yang dijual
         $where = ['id_produk' => $this->request->getPost('id_produk')];
         $cekBarang = $this->produk->where($where)->findAll();
@@ -75,7 +101,7 @@ class Penjualan extends BaseController
         // Mengarahkan pengguna kembali ke halaman transaksi penjualan
         return redirect()->to('penjualan');
     }
-    
+
     public function simpanPembayaran()
     {
         // Menghapus ID penjualan dari sesi

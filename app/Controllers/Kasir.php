@@ -17,11 +17,10 @@ class Kasir extends BaseController
         $data = [
             'title' => 'Halaman Dashboard',
             'judulHalaman' => 'Selamat Datang',
-            'totalPengguna' => $this->pengguna->getTotalPengguna(),
             'totalProduk' => $this->produk->getTotalProduk(),
             'pendapatanHariIni' => $this->detailpenjualan->pendapatanHarian(),
-            'pendapatanBulanIni' => $this->detailpenjualan->pendapatanBulanan(),
         ];
+        
         return view('kasir/halaman-kasir', $data);
     }
 }

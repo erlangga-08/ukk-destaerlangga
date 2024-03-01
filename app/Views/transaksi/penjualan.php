@@ -44,7 +44,7 @@
                                 </div> -->
                     <div class="form-group mb-3 mt-1">
                         <label for="produk" class="mb-1 form-label">Produk</label>
-                        <select class="js-example-basic-single form-control" name="id_produk">
+                        <select class="js-example-basic-single form-control <?= session()->has('errors') ? 'is-invalid' : null ?>" name="id_produk">
                             <option value="">--Cari Produk--</option>
                             <?php if (isset($dataProduk)) :
                                 foreach ($dataProduk as $row) : ?>
@@ -53,10 +53,24 @@
                                 endforeach;
                             endif; ?>
                         </select>
+                        <?php if (isset(session('errors')['id_produk'])) : ?>
+                            <div class="mx-1 invalid-feedback">
+                                <p style="font-size: 1rem;">
+                                    <?= session('errors')['id_produk']; ?>
+                                </p>
+                            </div>
+                        <?php endif; ?>
                     </div>
                     <div class="form-group mb-3">
                         <label for="jumlah" class="mb-1 form-label">Jumlah</label>
-                        <input type="text" class="form-control" id="jumlah" placeholder="Masukan jumlah" name="jumlah" autocomplete="off">
+                        <input type="text" class="form-control <?= session()->has('errors') ? 'is-invalid' : null ?>" id="jumlah" placeholder="Masukan jumlah" name="jumlah" autocomplete="off">
+                        <?php if (session()->has('errors') && session('errors')['jumlah']) : ?>
+                            <div class="mx-1 invalid-feedback">
+                                <p style="font-size: 1rem;">
+                                    <?= session('errors')['jumlah']; ?>
+                                </p>
+                            </div>
+                        <?php endif; ?>
                     </div>
                     <!-- <div class="col-md-4 mb-3">
                                     <label for="validationCustom01">Produk</label>
