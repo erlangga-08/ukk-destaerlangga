@@ -138,10 +138,8 @@ class Mdetailpenjualan extends Model
 
     public function getLaporan($bulan, $tahun, $jenis_laporan)
     {
-        $db = \Config\Database::connect();
-
         // Query untuk mengambil data penjualan
-        $builder = $db->table($this->table);
+        $builder = $this->db->table('tbl_detail_penjualan');
         $builder->select('SUM(total_harga) AS total_penjualan, SUM((tbl_produk.harga_jual - tbl_produk.harga_beli) * tbl_detail_penjualan.qty) AS total_keuntungan');
         $builder->join('tbl_penjualan', 'tbl_penjualan.id_penjualan = tbl_detail_penjualan.id_penjualan');
         $builder->join('tbl_produk', 'tbl_produk.id_produk = tbl_detail_penjualan.id_produk');
@@ -155,7 +153,7 @@ class Mdetailpenjualan extends Model
         $result = $query->getRow();
 
         // Query untuk mendapatkan detail penjualan
-        $builder = $db->table($this->table);
+        $builder = $this->db->table('tbl_detail_penjualan');
         $builder->select('tbl_detail_penjualan.*, tbl_produk.nama_produk, tbl_produk.harga_jual, tbl_produk.harga_beli, tbl_penjualan.tgl_penjualan');
         $builder->join('tbl_produk', 'tbl_produk.id_produk = tbl_detail_penjualan.id_produk');
         $builder->join('tbl_penjualan', 'tbl_penjualan.id_penjualan = tbl_detail_penjualan.id_penjualan');
