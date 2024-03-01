@@ -20,9 +20,8 @@ Aplikasi ini merupakan contoh project uji kompetensi program keahlian Rekayasa P
 5. Seting :
    <code> 
    CI_ENVIRONMENT = development atau production
-   
    app.baseURL = 'http://localhost:8080'
-
+   
    database.default.hostname = localhost
    database.default.database = db_kasir
    database.default.username = root
