@@ -135,4 +135,47 @@ class Mdetailpenjualan extends Model
             ->get()
             ->getResultArray();
     }
+
+    public function getLaporan($bulan, $tahun, $jenis_laporan)
+    {
+        $db = \Config\Database::connect();
+
+        // Query untuk mengambil data penjualan
+        $builder = $db->table($this->table);
+        $builder->select('SUM(total_harga) AS total_penjualan, SUM((tbl_produk.harga_jual - tbl_produk.harga_beli) * tbl_detail_penjualan.qty) AS total_keuntungan');
+        $builder->join('tbl_penjualan', 'tbl_penjualan.id_penjualan = tbl_detail_penjualan.id_penjualan');
+        $builder->join('tbl_produk', 'tbl_produk.id_produk = tbl_detail_penjualan.id_produk');
+        $builder->where('YEAR(tbl_penjualan.tgl_penjualan)', $tahun);
+
+        if ($jenis_laporan == 'bulanan') {
+            $builder->where('MONTH(tbl_penjualan.tgl_penjualan)', $bulan);
+        }
+
+        $query = $builder->get();
+        $result = $query->getRow();
+
+        // Query untuk mendapatkan detail penjualan
+        $builder = $db->table($this->table);
+        $builder->select('tbl_detail_penjualan.*, tbl_produk.nama_produk, tbl_produk.harga_jual, tbl_produk.harga_beli, tbl_penjualan.tgl_penjualan');
+        $builder->join('tbl_produk', 'tbl_produk.id_produk = tbl_detail_penjualan.id_produk');
+        $builder->join('tbl_penjualan', 'tbl_penjualan.id_penjualan = tbl_detail_penjualan.id_penjualan');
+        $builder->where('YEAR(tbl_penjualan.tgl_penjualan)', $tahun);
+
+        if ($jenis_laporan == 'bulanan') {
+            $builder->where('MONTH(tbl_penjualan.tgl_penjualan)', $bulan);
+        }
+
+        $detail_penjualan = $builder->get()->getResultArray();
+
+        return [
+            'detail_penjualan' => $detail_penjualan,
+            'title' => 'LaporanPenjualan',
+            'judulHalaman' => 'Laporan Penjualan',
+            'bulan' => $bulan,
+            'tahun' => $tahun,
+            'jenis_laporan' => $jenis_laporan,
+            'total_penjualan' => isset($result->total_penjualan) ? $result->total_penjualan : null,
+            'total_keuntungan' => isset($result->total_keuntungan) ? $result->total_keuntungan : null
+        ];
+    }
 }

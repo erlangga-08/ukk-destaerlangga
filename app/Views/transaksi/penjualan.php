@@ -183,8 +183,12 @@
         let totalHargaSemuaBarang = parseFloat(<?= $totalHarga; ?>);
         let kembali = totalBayar - totalHargaSemuaBarang;
 
-        $('#kembali').val('Rp.' + kembali);
-
+        // $('#kembali').val('Rp.' + kembali);
+        if (kembali >= 0) {
+            $('#kembali').val(kembali.toFixed(2).replace(/(\.00)+$/, '')); // Menampilkan hingga 2 digit desimal
+        } else {
+            $('#kembali').val('0'); 
+        }
         // Memanggil fungsi untuk mengatur status pembayaran setiap kali nilai berubah
         aturStatusPembayaran();
     });

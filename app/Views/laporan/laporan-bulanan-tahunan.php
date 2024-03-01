@@ -10,6 +10,9 @@
 <div class="row p-3">
     <div class="col-lg-12">
         <p class="form-label">Jenis Laporan : <span class="fw-normal"><?= $jenis_laporan == 'bulanan' ? 'Bulanan' : 'Tahunan' ?></span></p>
+        <?php if ($jenis_laporan == 'bulanan') : ?>
+            <p class="form-label">Bulan: <span class="fw-normal"><?= $bulan ?></span></p>
+        <?php endif; ?>
         <p class="form-label">Tahun: <span class="fw-normal"><?= $tahun ?></span></p>
     </div>
 </div>
@@ -19,7 +22,7 @@
         <div class="card">
             <div class="row mt-3 mx-3">
                 <div>
-                    <a href="<?= site_url('cetak-laporan'); ?>" class="btn btn-danger">Download PDF<i class="fas fa-file-pdf mx-2"></i></a>
+                    <a href="<?= site_url('laporan-penjualan'); ?>" class="btn btn-danger"><-Kembali</a>
                 </div>
             </div>
             <div class="card-body">
