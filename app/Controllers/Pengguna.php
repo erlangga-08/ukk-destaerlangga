@@ -62,7 +62,7 @@ class Pengguna extends BaseController
                 'required' => 'Tidak boleh kosong!',
             ],
             'level' => [
-                'required' => 'Tidak boleh kosong!',
+                'required' => 'Tidak boleh kosong!!',
             ],
         ];
 
